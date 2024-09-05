@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id             Int      @id @default(autoincrement())  // 고유 프로필 ID
+  supabaseUserId String   @unique                       // Supabase에서 받은 고유 사용자 ID
+  fullName       String?                                // 전체 이름 (선택)
+  profileImage   String?                                // 프로필 이미지 URL (선택)
+  role           String    @default("user")             // 사용자 역할 (기본값은 'user')
+  createdAt      DateTime  @default(now())              // 프로필 생성 날짜
+}
